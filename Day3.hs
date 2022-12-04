@@ -18,14 +18,13 @@ sharedItem :: [[Item]] -> Maybe Item
 sharedItem [] = Nothing
 sharedItem (r:rs) = find (\i -> all (i `elem`) rs) r 
 
-problem1 :: IO ()
-problem1 = print . fmap sum . mapM (priority <=< repeatedItem) . lines =<< getContents
+part1 :: [String] -> String
+part1 = show . fmap sum . mapM (priority <=< repeatedItem)
 
 -- Problema 2
 groupInThrees :: [a] -> [[a]]
 groupInThrees = map (map snd) . groupBy (\x y -> fst x `div` 3 == fst y `div` 3) . zip [0..]
 
-problem2 :: IO ()
-problem2 = print . sum . mapMaybe (priority <=< sharedItem) . groupInThrees . lines =<< getContents
+part2 :: [String] -> String
+part2 = show . sum . mapMaybe (priority <=< sharedItem) . groupInThrees
 
-main = problem2
