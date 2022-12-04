@@ -4,6 +4,7 @@ import System.Environment
 import Day1
 import Day2
 import Day3
+import Day4
 
 type Solution = [String] -> String
 type Day = Int
@@ -12,7 +13,8 @@ solutions :: [(Day, (Solution, Solution))]
 solutions = zip [1..] [
     (Day1.part1, Day1.part2),
     (Day2.part1, Day2.part2),
-    (Day3.part1, Day3.part2)
+    (Day3.part1, Day3.part2),
+    (Day4.part1, undefined)
     ]
 
 main :: IO ()
