@@ -1,8 +1,8 @@
 module Day3 where
 
 import Data.List
-import Control.Monad
 import Data.Maybe 
+import Data.Function
 
 type Item = Char
 type Priority = Int
@@ -22,7 +22,7 @@ part1 = show . sum . map (priority . repeatedItem)
 
 -- Problema 2
 groupInThrees :: [a] -> [[a]]
-groupInThrees = map (map snd) . groupBy (\(i1,_) (i2,_) -> i1 `div` 3 == i2 `div` 3) . zip [0..]
+groupInThrees = map (map snd) . groupBy ((==) `on` (`div` 3) . fst) . zip [0..]
 
 part2 :: [String] -> String
 part2 = show . sum . map (priority . sharedItem) . groupInThrees

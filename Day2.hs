@@ -1,6 +1,7 @@
 module Day2 where
 
 import System.Environment
+import Data.Maybe
 
 data Move = Rock | Paper | Scissors deriving Eq
 data Result = Win | Loss | Draw deriving Eq
@@ -9,19 +10,18 @@ rules :: [(Move,Move)]
 rules = [(Rock,Scissors), (Paper,Rock), (Scissors,Paper)]
 
 losesTo :: Move -> Move
-losesTo m = let Just r = lookup m rules
-             in r
+losesTo = fromJust . (`lookup` rules)
 
 defeats :: Move -> Move
-defeats m = let Just r = lookup m $ map (\(w,l) -> (l,w)) rules
-             in r 
+defeats = fromJust . (`lookup` invertedRules)
+    where invertedRules = map (\(w,l) -> (l,w)) rules 
 
 roundScore :: Move -> Move -> Int
-roundScore opp me = calculateScore me $ roundResult opp me
+roundScore opponent me = calculateScore me $ roundResult opponent me
 
 roundResult :: Move -> Move -> Result
 roundResult opponent me | opponent == me = Draw
-                        | losesTo opponent == me = Loss
+                        | me == losesTo opponent = Loss
                         | otherwise = Win
 
 shapeScore :: Move -> Int
@@ -38,22 +38,22 @@ calculateScore :: Move -> Result -> Int
 calculateScore move result = resultScore result + shapeScore move
 
 processContent :: [String] -> [(Move,Move)]
-processContent = map ((\[o,m] -> (o,m)) . map strToMove . words)
+processContent = map ((\[o,m] -> (o,m)) . map readMove . words)
 
-strToMove :: String -> Move
-strToMove s | s `elem` ["X", "A"] = Rock
-            | s `elem` ["Y", "B"] = Paper
-            | otherwise = Scissors
+readMove :: String -> Move
+readMove s | s `elem` ["X", "A"] = Rock
+           | s `elem` ["Y", "B"] = Paper
+           | otherwise = Scissors
 
 part1 :: [String] -> String
 part1 = show . sum . map (uncurry roundScore) . processContent
 
 -- Problem 2
 
-strToResult :: String -> Result
-strToResult "X" = Loss
-strToResult "Y" = Draw
-strToResult "Z" = Win
+readResult :: String -> Result
+readResult "X" = Loss
+readResult "Y" = Draw
+readResult "Z" = Win
 
 chooseMove :: Move -> Result -> Move
 chooseMove m Draw = m
@@ -61,7 +61,7 @@ chooseMove m Loss = losesTo m
 chooseMove m Win = defeats m
 
 processContent2 :: [String] -> [(Move,Move)]
-processContent2 = map ((\(o,r) -> (o, chooseMove o r)) . (\[o,r] -> (strToMove o, strToResult r)) . words)
+processContent2 = map $ (\(o,r) -> (o, chooseMove o r)) . (\[o,r] -> (readMove o, readResult r)) . words
 
 part2 :: [String] -> String
 part2 = show . sum . map (uncurry roundScore) . processContent2
