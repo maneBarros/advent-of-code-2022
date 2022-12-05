@@ -11,26 +11,6 @@ type Crate = Char
 type Move = (Int,Int,Int)
 type MoveFun = Int -> Stack -> Stack -> (Stack,Stack)
 
-teste = "                [M]     [W] [M]    \n\
-\            [L] [Q] [S] [C] [R]    \n\
-\            [Q] [F] [F] [T] [N] [S]\n\
-\    [N]     [V] [V] [H] [L] [J] [D]\n\
-\    [D] [D] [W] [P] [G] [R] [D] [F]\n\
-\[T] [T] [M] [G] [G] [Q] [N] [W] [L]\n\
-\[Z] [H] [F] [J] [D] [Z] [S] [H] [Q]\n\
-\[B] [V] [B] [T] [W] [V] [Z] [Z] [M]\n\
-\ 1   2   3   4   5   6   7   8   9 "
-
-teste2 = "    [D]    \n\
-\[N] [C]    \n\
-\[Z] [M] [P]\n\
-\ 1   2   3 \n\
-\\n\
-\move 1 from 2 to 1\n\
-\move 3 from 1 to 3\n\
-\move 2 from 2 to 1\n\
-\move 1 from 1 to 2"
-
 move :: Int -> Stack -> Stack -> (Stack,Stack)
 move 0 from to = (from,to)
 move n (f:fs) to = move (n-1) fs (f : to)
