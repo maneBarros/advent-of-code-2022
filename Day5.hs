@@ -6,16 +6,15 @@ import Data.List
 import Data.Char
 import Data.Bifunctor
 
-type Stack = [Crate]
-type Crate = Char
+type Stack = String
 type Move = (Int,Int,Int)
 type MoveFun = Int -> Stack -> Stack -> (Stack,Stack)
 
-move :: Int -> Stack -> Stack -> (Stack,Stack)
+move :: MoveFun
 move 0 from to = (from,to)
 move n (f:fs) to = move (n-1) fs (f : to)
 
-move2 :: Int -> Stack -> Stack -> (Stack,Stack)
+move2 :: MoveFun
 move2 n from to = (b, a ++ to)
     where (a,b) = splitAt n from
 
