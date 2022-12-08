@@ -6,7 +6,7 @@ import Data.List
 import Data.Char
 import Data.Bifunctor
 
-type Stack = String
+type Stack = [Char]
 type Move = (Int,Int,Int)
 type MoveFun = Int -> Stack -> Stack -> (Stack,Stack)
 
