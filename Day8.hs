@@ -16,7 +16,7 @@ isVisible forest (r,c) = isVisibleDirection c row || isVisibleDirection r column
 isVisibleDirection :: Int -> [Height] -> Bool
 isVisibleDirection i l = i == 0 || i == length l - 1 || any (all (< height)) [left,right]
     where height = l !! i
-          (left,right) = second tail (splitAt i l)
+          (left,right) = splitAndDiscardAt i l
 
 scenicScore :: Forest -> Tree -> Int
 scenicScore forest (r,c) = vl * vr * vu * vd
