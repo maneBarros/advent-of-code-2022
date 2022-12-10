@@ -1,5 +1,6 @@
-module Day4 where
+module Main where
 
+import Utils
 import Data.Bifunctor
 
 type Assignment = (Int,Int)
@@ -19,8 +20,10 @@ readAssignment = bimap read (read . tail) . break (== '-')
 processLines :: [String] -> [(Assignment,Assignment)]
 processLines = map $ bimap readAssignment (readAssignment . tail) . break (== ',')
 
-part1 :: [String] -> String
-part1 = show . length . filter (uncurry fullOverlap) . processLines
+part1 :: [(Assignment,Assignment)] -> Int
+part1 = length . filter (uncurry fullOverlap)
 
-part2 :: [String] -> String
-part2 = show . length . filter (uncurry overlap) . processLines
+part2 :: [(Assignment,Assignment)] -> Int
+part2 = length . filter (uncurry overlap)
+
+main = print . (part1 `split` part2) . processLines =<< getLines

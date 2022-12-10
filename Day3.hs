@@ -1,8 +1,10 @@
-module Day3 where
+module Main where
 
 import Data.List
 import Data.Maybe 
 import Data.Function
+import Data.Bifunctor
+import Utils
 
 type Item = Char
 type Priority = Int
@@ -17,13 +19,13 @@ repeatedItem rucksack = (\(c1,c2) -> sharedItem [c1,c2]) $ splitAt (length rucks
 sharedItem :: [[Item]] -> Item
 sharedItem (r:rs) = fromJust $ find (\i -> all (i `elem`) rs) r 
 
-part1 :: [String] -> String
-part1 = show . sum . map (priority . repeatedItem)
-
--- Problem 2
 groupInThrees :: [a] -> [[a]]
 groupInThrees = map (map snd) . groupBy ((==) `on` (`div` 3) . fst) . zip [0..]
 
-part2 :: [String] -> String
-part2 = show . sum . map (priority . sharedItem) . groupInThrees
+part1 :: [String] -> Int
+part1 = sum . map (priority . repeatedItem)
 
+part2 :: [String] -> Int
+part2 = sum . map (priority . sharedItem) . groupInThrees
+
+main = print . (part1 `split` part2) =<< getLines

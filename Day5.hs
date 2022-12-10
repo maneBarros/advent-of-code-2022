@@ -1,4 +1,4 @@
-module Day5 where
+module Main where
 
 import Text.Read
 import Data.Maybe 
@@ -35,6 +35,4 @@ readStacks = map (dropWhile isSpace . init) . filter (isDigit . last) . transpos
 solve :: MoveFun -> [String] -> String
 solve f = map head . uncurry (applyMoves f) . bimap readStacks (map readMove . tail) . break null
 
-part1 = solve move
-part2 = solve move2
-
+main = print . (solve move `split` solve move2) =<< getLines

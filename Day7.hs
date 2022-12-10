@@ -69,28 +69,20 @@ findFiles f file@(File _ _) = if f file then [file] else []
 findFiles f dir@(Directory _ cs) = if f dir then dir:rec else rec
     where rec = concatMap (findFiles f) cs
 
-part1 :: [String] -> String
-part1 = show . 
-        sum . 
+part1 :: Filesystem -> Int
+part1 = sum . 
         map size .
-        findFiles (\f -> isDir f && sizeAtMost 100000 f) .
-        readFilesystem
+        findFiles (\f -> isDir f && sizeAtMost 100000 f)
         where
         sizeAtMost x = (<=x) . size
 
--- Part 2
---
-total :: Int
-total = 70000000
-
-required :: Int
-required = 30000000
-
-part2 :: [String] -> String
-part2 = show .
-        minimum .
+part2 :: Filesystem -> Int
+part2 = minimum .
         map size .
-        (\fs -> findFiles (\f -> isDir f && size f >= (required - unused fs)) fs) .
-        readFilesystem
+        (\fs -> findFiles (\f -> isDir f && size f >= (required - unused fs)) fs)
         where
+        total = 70000000
+        required = 30000000
         unused f = total - size f
+
+main = print . (part1 `split` part2) . readFilesystem =<< getLines 

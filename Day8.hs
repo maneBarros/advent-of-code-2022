@@ -42,6 +42,5 @@ part1 forest = length $ filter (isVisible forest) (allTrees forest)
 part2 :: Forest -> Int
 part2 forest = maximum $ map (scenicScore forest) (allTrees forest)
 
-main :: IO ()
 main = print . (part1 `split` part2 ) . map (map digitToInt) =<< getLines
 

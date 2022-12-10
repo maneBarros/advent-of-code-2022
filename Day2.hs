@@ -1,7 +1,9 @@
-module Day2 where
+module Main where
 
+import Utils
 import System.Environment
 import Data.Maybe
+import Data.Bifunctor
 
 data Move = Rock | Paper | Scissors deriving Eq
 data Result = Win | Loss | Draw deriving Eq
@@ -45,9 +47,6 @@ readMove s | s `elem` ["X", "A"] = Rock
            | s `elem` ["Y", "B"] = Paper
            | otherwise = Scissors
 
-part1 :: [String] -> String
-part1 = show . sum . map (uncurry roundScore) . processContent
-
 -- Problem 2
 
 readResult :: String -> Result
@@ -63,5 +62,5 @@ chooseMove m Win = defeats m
 processContent2 :: [String] -> [(Move,Move)]
 processContent2 = map $ (\(o,r) -> (o, chooseMove o r)) . (\[o,r] -> (readMove o, readResult r)) . words
 
-part2 :: [String] -> String
-part2 = show . sum . map (uncurry roundScore) . processContent2
+main = print . bimap f f . (processContent `split` processContent2) =<< getLines 
+    where f = sum . map (uncurry roundScore)

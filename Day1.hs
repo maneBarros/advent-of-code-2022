@@ -1,5 +1,6 @@
-module Day1 where
+module Main where
 
+import Utils
 import Data.List
 import Data.Function
 
@@ -9,8 +10,6 @@ getElvesCalories =
     filter (not . null . head) . 
     groupBy ((==) `on` null)
 
-part1 :: [String] -> String
-part1 = show . maximum . getElvesCalories
-
-part2 :: [String] -> String
-part2 = show . sum . take 3 . sortOn ((-1)*) . getElvesCalories 
+main = print . (part1 `split` part2) . getElvesCalories =<< getLines
+    where part1 = maximum
+          part2 = sum . take 3 . sortOn ((-1)*)
