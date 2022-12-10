@@ -20,7 +20,7 @@ sharedItem (r:rs) = fromJust $ find (\i -> all (i `elem`) rs) r
 part1 :: [String] -> String
 part1 = show . sum . map (priority . repeatedItem)
 
--- Problema 2
+-- Problem 2
 groupInThrees :: [a] -> [[a]]
 groupInThrees = map (map snd) . groupBy ((==) `on` (`div` 3) . fst) . zip [0..]
 

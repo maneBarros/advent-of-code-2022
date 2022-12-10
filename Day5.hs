@@ -5,6 +5,7 @@ import Data.Maybe
 import Data.List
 import Data.Char
 import Data.Bifunctor
+import Utils
 
 type Stack = [Char]
 type Move = (Int,Int,Int)
@@ -17,10 +18,6 @@ move n (f:fs) to = move (n-1) fs (f : to)
 move2 :: MoveFun
 move2 n from to = (b, a ++ to)
     where (a,b) = splitAt n from
-
-replace :: Int -> a -> [a] -> [a]
-replace index item l = pre ++ (item : pos)
-    where (pre,_:pos) = splitAt index l
 
 applyMove :: MoveFun -> [Stack] -> Move -> [Stack]
 applyMove f stacks (quantity,from,to) = replace (to-1) to2 $ replace (from-1) from2 stacks 
