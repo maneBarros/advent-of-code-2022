@@ -7,6 +7,11 @@ replace :: Int -> a -> [a] -> [a]
 replace index item l = pre ++ (item : pos)
     where (pre,_:pos) = splitAt index l
 
+update :: (a -> a) -> Int -> [a] -> [a]
+update f i l = prefix ++ (updatedItem : rest)
+    where (prefix, item:rest) = splitAt i l
+          updatedItem = f item
+
 splitAndDiscardAt :: Int -> [a] -> ([a],[a])
 splitAndDiscardAt i = second tail . splitAt i
 
