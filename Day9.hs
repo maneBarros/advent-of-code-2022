@@ -1,3 +1,5 @@
+module Day9 where
+
 import Utils
 import Data.Bifunctor
 
@@ -35,6 +37,7 @@ moveHead (rope,history) d = (newRope,newHistory)
 visitedByTail :: ([Position],[Position]) -> [Direction] -> Int
 visitedByTail st = length . snd . foldl moveHead st
 
+{-
 main = print . 
        (visitedByTail rope1 `split` visitedByTail rope2) .
        readMoves =<< getLines
@@ -42,3 +45,4 @@ main = print .
        rope1 = (replicate 2 origin, [origin])
        rope2 = (replicate 10 origin, [origin])
        origin = (0,0)
+-}
