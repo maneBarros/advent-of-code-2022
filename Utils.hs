@@ -27,3 +27,11 @@ getLines = lines <$> getInput
 
 split :: (a -> b) -> (a -> c) -> a -> (b,c)
 split f g x = (f x, g x)
+
+mcd :: [Int] -> Int
+mcd l = let min = minimum l in
+        until (\x -> all ((== 0) . (`mod` x)) l) (subtract 1) min
+
+mcm :: [Int] -> Int
+mcm l = let max = maximum l in
+        until (\x -> all (\n -> x `mod` n == 0) l) (+max) max
